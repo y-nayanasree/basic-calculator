@@ -1,0 +1,181 @@
+/* Removes default spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main webpage */
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(135deg, #0f4c81, #2a9d8f);
+}
+
+/* Main BMI card */
+.bmi-container {
+    width: 100%;
+    max-width: 450px;
+
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* Heading */
+h1 {
+    color: #12344d;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+
+    letter-spacing: 1px;
+}
+
+/* Subtitle */
+.subtitle {
+    color: #667085;
+
+    margin-bottom: 28px;
+
+    line-height: 1.5;
+
+    font-size: 15px;
+}
+
+/* Labels */
+label {
+    display: block;
+
+    text-align: left;
+
+    margin-bottom: 7px;
+
+    color: #12344d;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+/* Input fields */
+input {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    border: 2px solid #d8e2ea;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+/* Input focus */
+input:focus {
+    border-color: #2a9d8f;
+
+    box-shadow: 0 0 8px rgba(42, 157, 143, 0.2);
+}
+
+/* Calculate button */
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #0f4c81, #2a9d8f);
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Button hover */
+button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(15, 76, 129, 0.25);
+}
+
+/* Result area */
+#result {
+    margin-top: 25px;
+
+    padding: 18px;
+
+    min-height: 60px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #eef8f7;
+
+    border: 1px solid #c5e7e2;
+
+    border-radius: 12px;
+
+    color: #12344d;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    line-height: 1.5;
+}
+
+/* Mobile responsive design */
+@media (max-width: 500px) {
+
+    .bmi-container {
+        padding: 30px 22px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 15px;
+    }
+}
