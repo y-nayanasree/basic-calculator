@@ -1,4 +1,4 @@
-```javascript
+
 let currentNumber = "";
 let previousNumber = "";
 let selectedOperator = null;
@@ -212,4 +212,3 @@ document.addEventListener("keydown", function (event) {
     }
 
 });
-```
