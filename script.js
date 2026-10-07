@@ -1,65 +1,215 @@
+```javascript
+let currentNumber = "";
+let previousNumber = "";
+let selectedOperator = null;
 
-// Calculates BMI
-function calculateBMI() {
+const currentDisplay = document.getElementById("current");
+const previousDisplay = document.getElementById("previous");
 
-    // Get height and weight values
-    const heightInput = document.getElementById("height").value;
-    const weightInput = document.getElementById("weight").value;
+function appendNumber(number) {
 
-    const result = document.getElementById("result");
-
-    // Check for empty values
-    if (heightInput === "" || weightInput === "") {
-
-        result.textContent =
-            "Please enter both height and weight.";
-
+    if (number === "." && currentNumber.includes(".")) {
         return;
     }
 
-    // Convert input values to numbers
-    const height = Number(heightInput);
-    const weight = Number(weightInput);
+    if (number === "." && currentNumber === "") {
+        currentNumber = "0";
+    }
 
-    // Reject zero and negative values
-    if (height <= 0 || weight <= 0) {
+    currentNumber += number;
 
-        result.textContent =
-            "Please enter valid positive values.";
+    updateDisplay();
+}
 
+
+function chooseOperator(operator) {
+
+    if (currentNumber === "" && previousNumber === "") {
         return;
     }
 
-    // Convert height from centimeters to meters
-    const heightInMeters = height / 100;
+    if (currentNumber === "" && previousNumber !== "") {
+        selectedOperator = operator;
+        updateDisplay();
+        return;
+    }
 
-    // BMI formula
-    const bmi = weight / (heightInMeters * heightInMeters);
+    if (previousNumber !== "" && selectedOperator !== null) {
+        calculate();
+    }
 
-    // Round BMI to two decimal places
-    const roundedBMI = bmi.toFixed(2);
+    selectedOperator = operator;
+    previousNumber = currentNumber;
+    currentNumber = "";
 
-    // Determine BMI category
-    let category;
+    updateDisplay();
+}
 
-    if (bmi < 18.5) {
 
-        category = "Underweight";
+function calculate() {
 
-    } else if (bmi < 25) {
+    if (
+        previousNumber === "" ||
+        currentNumber === "" ||
+        selectedOperator === null
+    ) {
+        return;
+    }
 
-        category = "Normal weight";
+    const firstNumber = parseFloat(previousNumber);
+    const secondNumber = parseFloat(currentNumber);
 
-    } else if (bmi < 30) {
+    let result;
 
-        category = "Overweight";
+    switch (selectedOperator) {
+
+        case "+":
+            result = firstNumber + secondNumber;
+            break;
+
+        case "-":
+            result = firstNumber - secondNumber;
+            break;
+
+        case "*":
+            result = firstNumber * secondNumber;
+            break;
+
+        case "/":
+
+            if (secondNumber === 0) {
+                currentDisplay.textContent = "Cannot divide by 0";
+                previousDisplay.textContent = "";
+
+                currentNumber = "";
+                previousNumber = "";
+                selectedOperator = null;
+
+                return;
+            }
+
+            result = firstNumber / secondNumber;
+            break;
+
+        case "%":
+
+            if (secondNumber === 0) {
+                currentDisplay.textContent = "Cannot divide by 0";
+                previousDisplay.textContent = "";
+
+                currentNumber = "";
+                previousNumber = "";
+                selectedOperator = null;
+
+                return;
+            }
+
+            result = firstNumber % secondNumber;
+            break;
+
+        default:
+            return;
+    }
+
+    currentNumber = Number(result.toFixed(10)).toString();
+
+    previousNumber = "";
+    selectedOperator = null;
+
+    updateDisplay();
+}
+
+
+function clearDisplay() {
+
+    currentNumber = "";
+    previousNumber = "";
+    selectedOperator = null;
+
+    currentDisplay.textContent = "0";
+    previousDisplay.textContent = "";
+}
+
+
+function deleteNumber() {
+
+    currentNumber = currentNumber.slice(0, -1);
+
+    updateDisplay();
+}
+
+
+function updateDisplay() {
+
+    currentDisplay.textContent = currentNumber || "0";
+
+    if (previousNumber && selectedOperator) {
+
+        previousDisplay.textContent =
+            `${previousNumber} ${getOperatorSymbol(selectedOperator)}`;
 
     } else {
 
-        category = "Obesity";
+        previousDisplay.textContent = "";
+    }
+}
+
+
+function getOperatorSymbol(operator) {
+
+    const symbols = {
+        "+": "+",
+        "-": "−",
+        "*": "×",
+        "/": "÷",
+        "%": "%"
+    };
+
+    return symbols[operator] || operator;
+}
+
+
+// Keyboard support
+
+document.addEventListener("keydown", function (event) {
+
+    const key = event.key;
+
+    if ((key >= "0" && key <= "9") || key === ".") {
+        appendNumber(key);
     }
 
-    // Display result
-    result.innerHTML =
-        `Your BMI: ${roundedBMI}<br>Category: ${category}`;
-}
+    else if (key === "+") {
+        chooseOperator("+");
+    }
+
+    else if (key === "-") {
+        chooseOperator("-");
+    }
+
+    else if (key === "*") {
+        chooseOperator("*");
+    }
+
+    else if (key === "/") {
+        chooseOperator("/");
+    }
+
+    else if (key === "%") {
+        chooseOperator("%");
+    }
+
+    else if (key === "Enter" || key === "=") {
+        calculate();
+    }
+
+    else if (key === "Backspace") {
+        deleteNumber();
+    }
+
+    else if (key === "Escape" || key === "Delete") {
+        clearDisplay();
+    }
+
+});
+```
